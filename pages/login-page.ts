@@ -25,24 +25,25 @@ export class LoginPage {
         await this.emailfield.waitFor();
     }
 
-    async login(username : string, password : string)
+    async login(username : string = '', password : string = '')
     {
-        await this.emailfield.click();
-        await this.emailfield.fill(username);
-        await this.emailfield.press('Tab');
-        await this.passwordfield.fill(password);
+        if(username)
+        {
+            await this.emailfield.click();
+            await this.emailfield.fill(username);
+        }
+        if (password)
+        {
+            await this.passwordfield.click();
+            await this.passwordfield.fill(password);
+        }
+
         await this.loginbutton.click();
     }
 
 
     async getErrorMessage() : Promise<string> 
     {
-        console.log(this.errorbutton.isVisible);
         return await this.errorText.innerText();
-    }
-
-    async errorMessage() : Promise<string> 
-    {
-        return await this.errorbutton.innerText();
     }
 }

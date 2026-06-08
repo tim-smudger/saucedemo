@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login-page';
 import { ProductPage } from '../pages/product-page';
-import { before } from 'node:test';
+import { env } from '../environments';
 
   let loginPage :LoginPage;
   let productPage : ProductPage;
@@ -12,24 +12,36 @@ import { before } from 'node:test';
     await loginPage.open();
   });
 
-test('test login with correct credentials', async ({ page }) => {
-  await loginPage.login('standard_user', 'secret_sauce');
+test('test login with correct credentials', async() => {
+  await loginPage.login(env.users.standard.username, env.users.standard.password);
   await productPage.pageOpened();
 
 });
 
+
+test('test missing password gives an error message', async() => {
+  await loginPage.login(env.users.standard.username, '');
+  expect(await loginPage.getErrorMessage()).toBe('Epic sadface: Password is required');
+});
+
+test('test missing username gives an error message', async() => {
+  await loginPage.login('', env.users.standard.password);
+  expect(await loginPage.getErrorMessage()).toBe('Epic sadface: Username is required');
+
+});
+
 test('test incorrect credentials gives an error message' , async ({ page }) => {
-  await loginPage.login('standard_user', 'wrong_password');
+  await loginPage.login(env.users.standard.username, 'wrong_password');
   expect(await loginPage.getErrorMessage()).toBe('Epic sadface: Username and password do not match any user in this service');
 });
 
 test('test error message can be cleared', async ({ page }) => {
-  await loginPage.login('standard_user', 'wrong_password');
+  await loginPage.login(env.users.standard.username, 'wrong_password');
   await loginPage.errorbutton.click();
   await expect(loginPage.errorbutton).not.toBeVisible();
 });
 
 test('test locked out user gets an error message' , async ({ page }) => {
-  await loginPage.login('locked_out_user', 'secret_sauce');
+  await loginPage.login(env.users.locked.username, env.users.locked.password);
   expect(await loginPage.getErrorMessage()).toBe('Epic sadface: Sorry, this user has been locked out.');
 });

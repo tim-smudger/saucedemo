@@ -1,4 +1,10 @@
 
+# Environment variables
+.env.*
+
+# Playwright MCP logs
+.playwright-mcp/
+
 # Playwright
 node_modules/
 /test-results/
