@@ -11,7 +11,7 @@ const environments = {
         password: process.env.PASSWORD_FOR_ALL!,
       },
       slow: {
-        username: process.env.SLOW_USER!,
+        username: process.env.STIMEOUT_TEST_USER!,
         password: process.env.PASSWORD_FOR_ALL!,
       },
     },
@@ -28,7 +28,7 @@ const environments = {
         password: process.env.PASSWORD_FOR_ALL!,
       },
         slow: {
-        username: process.env.SLOW_USER!,
+        username: process.env.STIMEOUT_TEST_USER!,
         password: process.env.PASSWORD_FOR_ALL!,
       },
     },
@@ -45,7 +45,7 @@ const environments = {
         password: process.env.PASSWORD_FOR_ALL!,
       },
       slow: {
-        username: process.env.SLOW_USER!,
+        username: process.env.TIMEOUT_TEST_USER!,
         password: process.env.PASSWORD_FOR_ALL!,
       },
     },
