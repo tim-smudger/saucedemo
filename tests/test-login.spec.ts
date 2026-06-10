@@ -14,8 +14,8 @@ import { env } from '../environments';
 
 test('test login with correct credentials', async() => {
   await loginPage.login(env.users.standard.username, env.users.standard.password);
-  await productPage.pageOpened();
-
+  await productPage.waitUntilLoaded();
+  await expect(productPage.inventoryList).toBeVisible();
 });
 
 
@@ -45,3 +45,17 @@ test('test locked out user gets an error message' , async ({ page }) => {
   await loginPage.login(env.users.locked.username, env.users.locked.password);
   expect(await loginPage.getErrorMessage()).toBe('Epic sadface: Sorry, this user has been locked out.');
 });
+
+test('test login can be completed using keyboard navigation only', async ({ page }) => {
+  await loginPage.loginViaKeyboard(env.users.standard.username, env.users.standard.password);
+  await productPage.waitUntilLoaded();
+  await expect(productPage.inventoryList).toBeVisible();
+});
+
+test('test delayed login still works ', async ({ page }) => {
+    test.setTimeout(60000);
+  await loginPage.loginViaKeyboard(env.users.slow.username, env.users.slow.password);
+  await productPage.waitUntilLoaded();
+  await expect(productPage.inventoryList).toBeVisible();
+});
+

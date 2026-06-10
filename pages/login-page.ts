@@ -41,6 +41,14 @@ export class LoginPage {
         await this.loginbutton.click();
     }
 
+    async loginViaKeyboard(username: string, password: string) 
+    {
+        await this.emailfield.fill(username);
+        await this.emailfield.press('Tab');
+        await this.passwordfield.fill(password);
+        await this.passwordfield.press('Enter');
+    }
+
 
     async getErrorMessage() : Promise<string> 
     {

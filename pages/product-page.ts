@@ -11,9 +11,8 @@ export class ProductPage
         this.inventoryList = page.locator('[data-test="inventory-container"]');
     }
 
-    async pageOpened()
+    async waitUntilLoaded() 
     {
         await this.page.waitForURL('/inventory.html');
-        await this.inventoryList.waitFor();
     }
 }
